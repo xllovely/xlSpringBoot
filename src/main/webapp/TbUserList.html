@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+       $().ready(function(){
+           $.ajax({
+               url:'/xlSpringboot/tbuser/getTbUserList',
+               type:'post',
+               dataType:'json',
+               success:function (data) {
+                   var tr="";
+                   for (var i=0;i<data.length;i++){
+                       tr=tr+"<tr><td>"+data[i].id+"</td>" +
+                           "<td>"+data[i].name+"</td>" +
+                           "<td>"+data[i].age+"</td>" +
+                           "<td>"+data[i].email+"</td>" +
+                           "<td><button onclick='updateTbUser("+data[i].id+")'>修改</button></td>" +
+                           "<td><button onclick='deleteTbUser("+data[i].id+")'>删除</button></td>" +
+                           "</tr>"
+                   }
+                   $("#tbody").append(tr);
+               }
+           })
+
+       })
+       function updateTbUser(id) {
+           document.cookie="userId="+id;
+           window.location.href="/xlSpringboot/addOrUpdateTbUser.html";
+       }
+       function deleteTbUser(id) {
+           $.ajax({
+               /*contentType: "application/text;charset=utf-8",*/
+               url:'/xlSpringboot/tbuser/deleteTbUser?id='+id,
+               type:'post',
+               dataType:'json',
+               success:function(data){
+                  if (data.state){
+                      alert(data.message);
+                      location.reload();
+                  } else {
+                      alert(data.message);
+                  }
+               }
+           })
+       }
+       function addTbUser() {
+           document.cookie="userId=0";
+            window.location.href="/xlSpringboot/addOrUpdateTbUser.html";
+       }
+    </script>
+    <style>
+        td{
+            padding: 0px 100px 0px 100px;
+        }
+    </style>
+</head>
+<body>
+<center>
+<table border="1" style="text-align: center;margin: 0px 100px 0px 100px">
+    <caption>用户列表</caption>
+    <thead>
+        <tr><td>编号</td><td>姓名</td><td>年龄</td><td>邮箱</td><td colspan="2">操作</td></tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+    <tfoot><tr><td colspan="7"><button ONCLICK="addTbUser()">添加用户</button></td></tr></tfoot>
+</table>
+</center>
+</body>
+</html>

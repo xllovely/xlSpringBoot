@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作用户</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/getUrl.js"></script>
+    <script type="text/javascript">
+        function getCookie(cname)
+        {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++)
+            {
+                var c = ca[i].trim();
+                if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+            }
+            return "";
+        }
+
+         var id=0;
+        id=getCookie("userId")
+        $().ready(function(){
+            /*id=$.getUrlParam("id");*/
+            if(id!=0) {
+                $.ajax({
+                    /*contentType: "application/json;charset=utf-8",*/
+                    url: '/xlSpringboot/tbuser/getUserById',
+                    type: 'post',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#id").val(data.id);
+                        $("#name").val(data.name);
+                        $("#name").css('background-color',"azure");
+                        $("#name").attr('readonly','readonly');
+                        $("#age").val(data.age);
+                        $("#email").val(data.email);
+
+                    }
+                })
+            }
+            /*window.history.replaceState(null,null,"addOrUpdateTbUser.html");*/
+        })
+
+    </script>
+</head>
+<body onbeforeunload="return test()">
+<center>
+<table border="1">
+    <caption>操作用户</caption>
+    <form method="post" enctype="multipart/form-data">
+    <tr hidden><td>用户编号：</td><td colspan="2"><input type="text" id="id" name="id"/></td></tr>
+    <tr><td>用户姓名：</td><td colspan="2"><input type="text" id="name" name="name" /></td></tr>
+    <tr><td>用户年龄：</td><td colspan="2"><input type="text" id="age" name="age"/></td></tr>
+    <tr><td>用户邮箱：</td><td colspan="2"><input type="text" id="email" name="email"/></td></tr>
+    <tr><td><input type="button" id="submit" value="提交"/></td><td><input type="reset" value="重置"/></td><td><input type="button" id="out" value="返回"/></td></tr>
+    </form>
+</table>
+</center>
+</body>
+<script type="text/javascript">
+    $("#submit").click(function () {
+        $.ajax({
+            /*contentType: "application/json;charset=utf-8",*/
+            url:'/xlSpringboot/tbuser/addOrUpdateTbUser',
+            type:'post',
+            /*data:JSON.stringify({id:$("#id").val(),name:$("#name").val(),age:$("#age").val(),email:$("#email").val()}),*/
+            data:{id:$("#id").val(),name:$("#name").val(),age:$("#age").val(),email:$("#email").val()},
+            dataType:'json',
+            success:function(data){
+                console.log(data);
+                if(data.state){
+                    alert(data.message);
+                    window.location.href="/xlSpringboot/TbUserList.html";
+                }else{
+                    alert(data.message);
+                }
+            }
+        })
+    })
+    $("#out").click(function () {
+        window.location.href="/xlSpringboot/TbUserList.html";
+    })
+</script>
+</html>

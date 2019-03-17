@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>部门列表</title>
+    <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $().ready(function(){
+            $.ajax({
+                url:'/xlSpringboot/dept/list',
+                type:'post',
+                dataType:'json',
+                success:function (data) {
+                    var tr="";
+                    for (var i=0;i<data.length;i++){
+                        tr=tr+"<tr><td>"+data[i].id+"</td>" +
+                            "<td>"+data[i].dname+"</td>" +
+                            "<td>"+data[i].loc+"</td>" +
+                            "<td>图片名称"+data[i].pic+"<br>" +
+                            "<img width='80' height='100' src='/xlSpringboot/dept/showPic?fileName="+data[i].pic+"'>" +
+                            "<a href='/xlSpringboot/dept/downLoadFile?fileName="+data[i].pic+"'>下载</a></td>" +
+                            "</tr>"
+                    }
+                    $("#tbody").append(tr);
+                }
+            })
+
+        })
+            </script>
+</head>
+<body>
+<center>
+    <table border="1" style="text-align: center;margin: 0px 100px 0px 100px">
+        <caption>部门列表</caption>
+        <thead>
+        <tr><td>编号</td><td>名称</td><td>位置</td><td>路径</td></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+
+    </table>
+</center>
+</body>
+</html>
