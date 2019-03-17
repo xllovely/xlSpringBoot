@@ -27,6 +27,7 @@ public class TbUserController {
     }
     @RequestMapping("/addOrUpdateTbUser")
     public Message addOrUpdateTbUser(@RequestParam Map map){
+        System.out.println(111111);
         System.out.println(111);
         Message message=new Message();
         if(map!=null&&!map.get("id").equals("")){
