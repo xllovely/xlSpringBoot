@@ -46,4 +46,37 @@ public interface TbUserDao {
      */
     @Delete("delete from tb_user where id=#{id}")
     void deleteTbUser(Integer id);
+
+    /**
+     * 根据参数获取分页数据
+     * @param map
+     * @return
+     */
+    @Select({"<script>"+"select * from tb_user " +
+            "<where>" +
+            "<if test=\"name!=null and name!=''\">" +
+            " and name like concat('%',#{name},'%')" +
+            "</if>" +
+            "<if test=\"age!=null and age!=''\">" +
+            " and age = #{age}" +
+            "</if>" +
+            "</where> " +
+           /* "limit #{start},#{pageSize}"+*/"</script>" })
+    List<Map> getUserList(Map map);
+
+    /**
+     * 格局参数获取分页数据总数量
+     * @param map
+     * @return
+     */
+    @Select({"<script>"+"select count(*) from tb_user " +
+            "<where>" +
+            "<if test=\"name!=null and name!=''\"> " +
+            "and name like concat('%',#{name},'%')" +
+            "</if>" +
+            "<if test=\"age!=null and age!=''\"> " +
+            "and age = #{age}" +
+            "</if>" +
+            "</where> "+"</script>" })
+    int getUserPageCount(Map map);
 }

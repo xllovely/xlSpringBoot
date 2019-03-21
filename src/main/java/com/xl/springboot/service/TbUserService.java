@@ -33,4 +33,18 @@ public interface TbUserService {
      * @param id
      */
     boolean deleteTbUser(Integer id);
+
+    /**
+     * 根据参数获取分页数据
+     * @param map
+     * @return
+     */
+    List<Map> getUserList(Map map);
+
+    /**
+     * 格局参数获取分页数据总数量
+     * @param map
+     * @return
+     */
+    int getUserPageCount(Map map);
 }

@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>用户列表</title>
-    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <!--<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>-->
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/getUrl.js"></script>
+    <script type="text/javascript" src="js/sweetalert.min.js"></script>
+
     <script type="text/javascript">
        $().ready(function(){
            $.ajax({
@@ -47,9 +53,130 @@
            })
        }
        function addTbUser() {
-           document.cookie="userId=0";
-            window.location.href="/xlSpringboot/addOrUpdateTbUser.html";
+           alert(1)
+          /* swal("Hello world!");
+           swal("Here's the title!", "...and here's the text!");
+           swal("Good job!", "You clicked the button!", "success");
+           swal({
+               title: "Good job!",
+               text: "You clicked the button!",
+               icon: "success",
+           });
+           swal({
+               title: "Good job!",
+               text: "You clicked the button!",
+               icon: "success",
+               button: "Aww yiss!",
+           });
+           swal("Good job!", "You clicked the button!", "success", {
+               button: "Aww yiss!",
+           });*/
+           //https://www.cnblogs.com/beiz/p/5238124.html
+         /*  swal("Click on either the button or outside the modal.")
+               .then((value) =>{
+               swal(`The returned value is: ${value}`);
+       });*/
+
+           /* document.cookie="userId=0";
+             window.location.href="/xlSpringboot/addOrUpdateTbUser.html";*/
+           /*const myFirstPromise = new Promise((resolve, reject) => {
+               // ?做一些异步操作，最终会调用下面两者之一:
+               //
+               //   resolve(someValue); // fulfilled
+               // ?或
+               //   reject("failure reason"); // rejected
+           });*/
+           /*swal({
+               title: "Are you sure?",
+               text: "Once deleted, you will not be able to recover this imaginary file!",
+               icon: "warning",
+               buttons: true,
+               dangerMode: true,
+           })
+               .then((willDelete) => {
+               if (willDelete) {
+                   swal("Poof! Your imaginary file has been deleted!", {
+                       icon: "success",
+                   });
+               } else {
+                   swal("Your imaginary file is safe!");
        }
+       });*/
+          /* swal("Are you sure you want to do this?", {
+               buttons: ["Oh noez!", "Aww yiss!"],
+           });*/
+         /*  swal("Are you sure you want to do this?", {
+               buttons: ["Oh noez!", true],
+           });*/
+           /*swal("A wild Pikachu appeared! What do you want to do?", {
+               buttons: {
+                   cancel: "Run away!",
+                   catch: {
+                       text: "Throw Pokéball!",
+                       value: "catch",
+                   },
+                   defeat: true,
+               },
+           })
+               .then((value) => {
+               switch (value) {
+
+               case "defeat":
+                   swal("Pikachu fainted! You gained 500 XP!");
+                   break;
+
+               case "catch":
+                   swal("Gotcha!", "Pikachu was caught!", "success");
+                   break;
+
+               default:
+                   swal("Got away safely!");
+               }
+           });*/
+           swal({
+               text: 'Search for a movie. e.g. "La La Land".',
+               content: "input",
+               button: {
+                   text: "Search!",
+                   closeModal: false,
+               },
+           })
+               .then(name => {
+               swal(name);
+               if (!name) throw null;
+
+           return fetch(`${name}`);
+       })
+      .then(results => {
+              swal(results.json());
+               return results.json();
+       })
+      /* .then(json => {
+               const movie = json.results[0];
+
+           if (!movie) {
+               return swal("No movie was found!");
+           }
+
+           const name = movie.trackName;
+           const imageURL = movie.artworkUrl100;
+
+           swal({
+               title: "Top result:",
+               text: name,
+               icon: imageURL,
+           });
+       })*/
+       .catch(err => {
+               if (err) {
+                   swal("Oh noes!", "The AJAX request failed!", "error");
+               } else {
+                   swal.stopLoading();
+                   swal.close();
+       }
+       });
+       }
+
     </script>
     <style>
         td{
@@ -65,7 +192,7 @@
         <tr><td>编号</td><td>姓名</td><td>年龄</td><td>邮箱</td><td colspan="2">操作</td></tr>
     </thead>
     <tbody id="tbody"></tbody>
-    <tfoot><tr><td colspan="7"><button ONCLICK="addTbUser()">添加用户</button></td></tr></tfoot>
+    <tfoot><tr><td colspan="7"><button onclick="addTbUser()">添加用户</button></td></tr></tfoot>
 </table>
 </center>
 </body>

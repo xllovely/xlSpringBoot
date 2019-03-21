@@ -74,4 +74,26 @@ public class TbUserServiceImpl implements TbUserService {
             return false;
         }
     }
+    /**
+     * 根据参数获取分页数据
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> getUserList(Map map){
+       // map.put("start",(Integer.valueOf(map.get("pageNo")+"")-1)*Integer.valueOf(map.get("pageSize")+""));
+        return  tbUserDao.getUserList(map);
+    }
+
+    /**
+     * 格局参数获取分页数据总数量
+     *
+     * @param map
+     * @return
+     */
+    @Override
+    public int getUserPageCount(Map map) {
+
+        return tbUserDao.getUserPageCount(map);
+    }
 }
